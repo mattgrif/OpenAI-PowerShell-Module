@@ -1,0 +1,29 @@
+function Get-OpenAiModule {
+    [CmdletBinding()]
+    param (
+        [parameter(Mandatory=$true)]
+        $Token,
+        [parameter(Mandatory=$false)]
+        $Module
+    )
+
+    begin {
+        $headers = @{
+            Authorization = "Bearer $token"
+        }
+    }
+
+    process {
+        if([string]::IsNullOrEmpty($Module)){
+            $uri = 'https://api.openai.com/v1/models'
+        } else{
+            $uri = "https://api.openai.com/v1/models/$Module"
+        }
+
+        $output = Invoke-RestMethod -Method GET -Uri $uri -ContentType 'application/json' -Headers $headers
+    }
+
+    end {
+        return $($output.data)
+    }
+}
