@@ -1,0 +1,31 @@
+function Save-OpenAiConnection {
+	[CmdletBinding()]
+	param (
+		[parameter(Mandatory=$true)]
+		$APIKey,
+		$PreferredModel
+	)
+
+	begin {
+
+	}
+
+	process {
+		try {
+			$SecurePassword = $APIKey | ConvertTo-SecureString -AsPlainText -Force | ConvertFrom-SecureString
+			[Environment]::SetEnvironmentVariable('OpenAiToken', $SecurePassword, "User")
+		}
+		catch {
+			"An error has occured, please try again."
+		}
+
+		if(![string]::IsNullOrEmpty($PreferredModel)) {
+			[Environment]::SetEnvironmentVariable('OpenAiModel', $PreferredModel, "User")
+		}
+
+	}
+
+	end {
+		return 'Connection Saved Successfully.'
+	}
+}
