@@ -5,9 +5,9 @@ function Invoke-OpenAiTextCompletion {
         $Prompt,
         $Model,
 		# $Suffix, These Parameters have yet to be implemented.
-        $MaxTokens
+        $MaxTokens,
         # [ValidateRange(0, 1)]
-        # $Temperature = 0.75,
+        $Temperature = 0.75
 		# $TopP,
 		# $N,
 		# $Stream,
@@ -54,6 +54,14 @@ function Invoke-OpenAiTextCompletion {
             #Max_Tokens Optional Parameter
             $body += @{
                 max_tokens = $MaxTokens
+            }
+        }
+
+        #Add Temperature Parameters to the body
+        if(![string]::IsNullOrEmpty($MaxTokens)){
+            #Max_Tokens Optional Parameter
+            $body += @{
+                temperature = $Temperature
             }
         }
 
