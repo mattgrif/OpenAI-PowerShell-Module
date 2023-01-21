@@ -46,7 +46,6 @@ function Invoke-OpenAiTextCompletion {
         $body = @{
             model = $Model
             prompt = $Prompt
-            #temperature = $Temperature
         }
 
         #Add Optional Parameters to the body
